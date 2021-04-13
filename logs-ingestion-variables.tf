@@ -4,11 +4,11 @@ variable "logs_ingestion_enabled" {
 }
 
 variable "logs_ingestion_warning" {
-  type    = number
+  type = number
 }
 
 variable "logs_ingestion_critical" {
-  type    = number
+  type = number
 }
 
 variable "logs_ingestion_evaluation_period" {
@@ -39,4 +39,11 @@ variable "logs_ingestion_filter_override" {
 variable "logs_ingestion_alerting_enabled" {
   type    = bool
   default = true
+}
+
+variable "logs_ingestion_priority" {
+  description = "Number from 1 (high) to 5 (low)."
+
+  type    = number
+  default = null
 }

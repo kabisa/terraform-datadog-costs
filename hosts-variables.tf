@@ -9,7 +9,7 @@ variable "hosts_warning" {
 }
 
 variable "hosts_critical" {
-  type    = number
+  type = number
 }
 
 variable "hosts_evaluation_period" {
@@ -40,4 +40,11 @@ variable "hosts_filter_override" {
 variable "hosts_alerting_enabled" {
   type    = bool
   default = true
+}
+
+variable "hosts_priority" {
+  description = "Number from 1 (high) to 5 (low)."
+
+  type    = number
+  default = null
 }

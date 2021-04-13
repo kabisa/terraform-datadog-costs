@@ -9,7 +9,7 @@ variable "containers_warning" {
 }
 
 variable "containers_critical" {
-  type    = number
+  type = number
 }
 
 variable "containers_evaluation_period" {
@@ -40,4 +40,11 @@ variable "containers_filter_override" {
 variable "containers_alerting_enabled" {
   type    = bool
   default = true
+}
+
+variable "containers_priority" {
+  description = "Number from 1 (high) to 5 (low)."
+
+  type    = number
+  default = null
 }

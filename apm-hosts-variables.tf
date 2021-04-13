@@ -9,7 +9,7 @@ variable "apm_hosts_warning" {
 }
 
 variable "apm_hosts_critical" {
-  type    = number
+  type = number
 }
 
 variable "apm_hosts_evaluation_period" {
@@ -40,4 +40,11 @@ variable "apm_hosts_filter_override" {
 variable "apm_hosts_alerting_enabled" {
   type    = bool
   default = true
+}
+
+variable "apm_hosts_priority" {
+  description = "Number from 1 (high) to 5 (low)."
+
+  type    = number
+  default = null
 }
