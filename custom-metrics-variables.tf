@@ -9,7 +9,7 @@ variable "custom_metrics_warning" {
 }
 
 variable "custom_metrics_critical" {
-  type    = number
+  type = number
 }
 
 variable "custom_metrics_evaluation_period" {
@@ -40,4 +40,11 @@ variable "custom_metrics_filter_override" {
 variable "custom_metrics_alerting_enabled" {
   type    = bool
   default = true
+}
+
+variable "custom_metrics_priority" {
+  description = "Number from 1 (high) to 5 (low)."
+
+  type    = number
+  default = null
 }

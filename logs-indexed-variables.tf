@@ -9,7 +9,7 @@ variable "logs_indexed_warning" {
 }
 
 variable "logs_indexed_critical" {
-  type    = number
+  type = number
 }
 
 variable "logs_indexed_evaluation_period" {
@@ -40,4 +40,11 @@ variable "logs_indexed_filter_override" {
 variable "logs_indexed_alerting_enabled" {
   type    = bool
   default = true
+}
+
+variable "logs_indexed_priority" {
+  description = "Number from 1 (high) to 5 (low)."
+
+  type    = number
+  default = null
 }

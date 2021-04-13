@@ -28,3 +28,8 @@ variable "costs_dashboard_name_override" {
   type    = string
   default = ""
 }
+
+variable "locked" {
+  type    = bool
+  default = true
+}
