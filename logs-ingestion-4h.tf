@@ -12,14 +12,14 @@ module "logs_ingestion_4h" {
   recovery_message = "Logs ingestion amount has recovered below {{threshold}} ({{value}})"
 
   # monitor level vars
-  enabled            = var.apm_hosts_enabled
-  alerting_enabled   = var.apm_hosts_alerting_enabled
-  critical_threshold = var.apm_hosts_critical
-  warning_threshold  = var.apm_hosts_warning
-  priority           = var.apm_hosts_priority
-  severity           = var.apm_hosts_severity
-  docs               = var.apm_hosts_docs
-  note               = var.apm_hosts_note
+  enabled            = var.logs_ingestion_4h_enabled
+  alerting_enabled   = var.logs_ingestion_4h_alerting_enabled
+  critical_threshold = var.logs_ingestion_4h_critical
+  warning_threshold  = var.logs_ingestion_4h_warning
+  priority           = var.logs_ingestion_4h_priority
+  severity           = var.logs_ingestion_4h_severity
+  docs               = var.logs_ingestion_4h_docs
+  note               = var.logs_ingestion_4h_note
 
   # module level vars
   env                  = var.alert_env
