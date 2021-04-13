@@ -4,7 +4,7 @@ locals {
 }
 
 module "logs_ingestion_4h" {
-  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.5.1"
+  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.5.2"
 
   name             = "Logs ingestion high"
   query            = "sum(${var.logs_ingestion_4h_evaluation_period}):sum:datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_4h_filter}}.as_count() > ${var.logs_ingestion_4h_critical}"

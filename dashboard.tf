@@ -4,7 +4,7 @@ resource "datadog_dashboard" "cost_dashboard" {
 
   widget {
     alert_graph_definition {
-      alert_id    = datadog_monitor.hosts[0].id
+      alert_id    = module.hosts.alert_id
       title_align = "left"
       title_size  = "16"
       viz_type    = "timeseries"
@@ -12,7 +12,7 @@ resource "datadog_dashboard" "cost_dashboard" {
   }
   widget {
     alert_graph_definition {
-      alert_id    = datadog_monitor.apm_hosts[0].id
+      alert_id    = module.apm_hosts.alert_id
       title_align = "left"
       title_size  = "16"
       viz_type    = "timeseries"
@@ -20,7 +20,7 @@ resource "datadog_dashboard" "cost_dashboard" {
   }
   widget {
     alert_graph_definition {
-      alert_id    = datadog_monitor.containers[0].id
+      alert_id    = module.containers.alert_id
       title_align = "left"
       title_size  = "16"
       viz_type    = "timeseries"
@@ -28,7 +28,7 @@ resource "datadog_dashboard" "cost_dashboard" {
   }
   widget {
     alert_graph_definition {
-      alert_id    = datadog_monitor.logs_indexed[0].id
+      alert_id    = module.logs_indexed.alert_id
       title_align = "left"
       title_size  = "16"
       viz_type    = "timeseries"
@@ -36,7 +36,7 @@ resource "datadog_dashboard" "cost_dashboard" {
   }
   widget {
     alert_graph_definition {
-      alert_id    = datadog_monitor.custom_metrics[0].id
+      alert_id    = module.custom_metrics.alert_id
       title_align = "left"
       title_size  = "16"
       viz_type    = "timeseries"
@@ -44,7 +44,7 @@ resource "datadog_dashboard" "cost_dashboard" {
   }
   widget {
     alert_graph_definition {
-      alert_id    = datadog_monitor.logs_ingestion[0].id
+      alert_id    = module.logs_ingestion.alert_id
       title_align = "left"
       title_size  = "16"
       viz_type    = "timeseries"

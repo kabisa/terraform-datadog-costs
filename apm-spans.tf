@@ -4,7 +4,7 @@ locals {
 }
 
 module "apm_spans" {
-  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.5.1"
+  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.5.2"
 
   name             = "Estimated APM Analyzed Spans Usage"
   query            = "sum(${var.apm_spans_evaluation_period}):sum:datadog.estimated_usage.apm.indexed_spans{${local.apm_spans_filter}}.as_count() > ${var.apm_spans_critical}"
