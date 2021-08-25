@@ -4,7 +4,7 @@ locals {
 }
 
 module "logs_indexed" {
-  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.5.2"
+  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.6.0"
 
   name             = "Indexed Logs"
   query            = "sum(${var.logs_indexed_evaluation_period}):sum:datadog.logs.indexed{${local.logs_indexed_filter}}.as_count() > ${var.logs_indexed_critical}"

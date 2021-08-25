@@ -1,5 +1,5 @@
 resource "datadog_logs_metric" "ingested_bytes" {
-  name = "datadog.estimated_usage.logs.ingested_bytes"
+  name = "custom_datadog.estimated_usage.logs.ingested_bytes"
 
   compute {
     aggregation_type = "distribution"
@@ -22,7 +22,7 @@ resource "datadog_logs_metric" "ingested_bytes" {
 }
 
 resource "datadog_logs_metric" "ingested_events" {
-  name = "datadog.estimated_usage.logs.ingested_events"
+  name = "custom_datadog.estimated_usage.logs.ingested_events"
 
   compute {
     aggregation_type = "count"
