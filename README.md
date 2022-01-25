@@ -169,7 +169,7 @@ sum(${var.logs_ingestion_evaluation_period}):sum:custom_datadog.estimated_usage.
 
 Query:
 ```terraform
-sum(${var.logs_indexed_evaluation_period}):sum:datadog.logs.indexed{${local.logs_indexed_filter}}.as_count() > ${var.logs_indexed_critical}
+sum(${var.logs_indexed_evaluation_period}):sum:custom_datadog.estimated_usage.logs.ingested_events{${local.logs_indexed_filter}}.as_count() > ${var.logs_indexed_critical}
 ```
 
 | variable                       | default  | required | description                      |
