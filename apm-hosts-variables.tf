@@ -17,11 +17,6 @@ variable "apm_hosts_evaluation_period" {
   default = "last_1h"
 }
 
-variable "apm_hosts_severity" {
-  type    = string
-  default = "minor"
-}
-
 variable "apm_hosts_note" {
   type    = string
   default = ""
@@ -46,5 +41,5 @@ variable "apm_hosts_priority" {
   description = "Number from 1 (high) to 5 (low)."
 
   type    = number
-  default = null
+  default = 4
 }

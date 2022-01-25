@@ -16,11 +16,6 @@ variable "apm_spans_evaluation_period" {
   default = "last_1h"
 }
 
-variable "apm_spans_severity" {
-  type    = string
-  default = "minor"
-}
-
 variable "apm_spans_note" {
   type    = string
   default = ""
@@ -45,5 +40,5 @@ variable "apm_spans_priority" {
   description = "Number from 1 (high) to 5 (low)."
 
   type    = number
-  default = null
+  default = 3
 }

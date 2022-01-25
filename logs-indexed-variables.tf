@@ -17,11 +17,6 @@ variable "logs_indexed_evaluation_period" {
   default = "last_4h"
 }
 
-variable "logs_indexed_severity" {
-  type    = string
-  default = "minor"
-}
-
 variable "logs_indexed_note" {
   type    = string
   default = ""
@@ -46,5 +41,5 @@ variable "logs_indexed_priority" {
   description = "Number from 1 (high) to 5 (low)."
 
   type    = number
-  default = null
+  default = 3
 }

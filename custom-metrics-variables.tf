@@ -17,11 +17,6 @@ variable "custom_metrics_evaluation_period" {
   default = "last_1h"
 }
 
-variable "custom_metrics_severity" {
-  type    = string
-  default = "minor"
-}
-
 variable "custom_metrics_note" {
   type    = string
   default = ""
@@ -46,5 +41,5 @@ variable "custom_metrics_priority" {
   description = "Number from 1 (high) to 5 (low)."
 
   type    = number
-  default = null
+  default = 4
 }

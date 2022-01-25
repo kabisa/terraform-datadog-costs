@@ -4,7 +4,7 @@ locals {
 }
 
 module "containers" {
-  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.6.0"
+  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.7.0"
 
   name             = "Estimated Containers Usage"
   query            = "avg(${var.containers_evaluation_period}):sum:datadog.estimated_usage.containers{${local.containers_filter}} > ${var.containers_critical}"
@@ -17,7 +17,6 @@ module "containers" {
   critical_threshold = var.containers_critical
   warning_threshold  = var.containers_warning
   priority           = var.containers_priority
-  severity           = var.containers_severity
   docs               = var.containers_docs
   note               = var.containers_note
 
