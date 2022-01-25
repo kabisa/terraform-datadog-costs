@@ -7,7 +7,7 @@ module "logs_ingestion" {
   source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.7.0"
 
   name             = "Daily Logs Ingestion"
-  query            = "sum(${var.logs_ingestion_evaluation_period}):sum:datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_filter}}.as_count() > ${var.logs_ingestion_critical}"
+  query            = "sum(${var.logs_ingestion_evaluation_period}):sum:custom_datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_filter}}.as_count() > ${var.logs_ingestion_critical}"
   alert_message    = "The amount of logs ingested ${var.logs_ingestion_evaluation_period} is relatively high {{value}} and crosses threshold {{threshold}}"
   recovery_message = "Logs ingestion amount has recovered below {{threshold}} ({{value}})"
 

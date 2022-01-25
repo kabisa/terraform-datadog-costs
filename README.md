@@ -129,7 +129,7 @@ sum(${var.apm_spans_evaluation_period}):sum:datadog.estimated_usage.apm.indexed_
 
 Query:
 ```terraform
-sum(${var.logs_ingestion_4h_evaluation_period}):sum:datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_4h_filter}}.as_count() > ${var.logs_ingestion_4h_critical}
+sum(${var.logs_ingestion_4h_evaluation_period}):sum:custom_datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_4h_filter}}.as_count() > ${var.logs_ingestion_4h_critical}
 ```
 
 | variable                            | default  | required | description                      |
@@ -149,7 +149,7 @@ sum(${var.logs_ingestion_4h_evaluation_period}):sum:datadog.estimated_usage.logs
 
 Query:
 ```terraform
-sum(${var.logs_ingestion_evaluation_period}):sum:datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_filter}}.as_count() > ${var.logs_ingestion_critical}
+sum(${var.logs_ingestion_evaluation_period}):sum:custom_datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_filter}}.as_count() > ${var.logs_ingestion_critical}
 ```
 
 | variable                         | default  | required | description                      |

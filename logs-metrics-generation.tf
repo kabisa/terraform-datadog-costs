@@ -11,13 +11,18 @@ resource "datadog_logs_metric" "ingested_bytes" {
   }
 
   group_by {
+    path     = "service"
+    tag_name = "service"
+  }
+
+  group_by {
     path     = "datadog_index"
     tag_name = "datadog_index"
   }
 
   group_by {
-    path     = "service"
-    tag_name = "service"
+    path     = "host"
+    tag_name = "host"
   }
 }
 
@@ -33,11 +38,6 @@ resource "datadog_logs_metric" "ingested_events" {
   }
 
   group_by {
-    path     = "datadog_index"
-    tag_name = "datadog_index"
-  }
-
-  group_by {
     path     = "datadog_is_excluded"
     tag_name = "datadog_is_excluded"
   }
@@ -48,5 +48,13 @@ resource "datadog_logs_metric" "ingested_events" {
   group_by {
     path     = "status"
     tag_name = "status"
+  }
+  group_by {
+    path     = "datadog_index"
+    tag_name = "datadog_index"
+  }
+  group_by {
+    path     = "host"
+    tag_name = "host"
   }
 }
