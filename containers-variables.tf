@@ -17,11 +17,6 @@ variable "containers_evaluation_period" {
   default = "last_1h"
 }
 
-variable "containers_severity" {
-  type    = string
-  default = "minor"
-}
-
 variable "containers_note" {
   type    = string
   default = ""
@@ -46,5 +41,5 @@ variable "containers_priority" {
   description = "Number from 1 (high) to 5 (low)."
 
   type    = number
-  default = null
+  default = 4
 }

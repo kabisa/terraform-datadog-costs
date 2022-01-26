@@ -4,7 +4,7 @@ locals {
 }
 
 module "hosts" {
-  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.6.0"
+  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.7.0"
 
   name             = "Estimated Hosts Usage"
   query            = "avg(${var.hosts_evaluation_period}):sum:datadog.estimated_usage.hosts{${local.hosts_filter}} > ${var.hosts_critical}"
@@ -17,7 +17,6 @@ module "hosts" {
   critical_threshold = var.hosts_critical
   warning_threshold  = var.hosts_warning
   priority           = var.hosts_priority
-  severity           = var.hosts_severity
   docs               = var.hosts_docs
   note               = var.hosts_note
 

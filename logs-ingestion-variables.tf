@@ -16,11 +16,6 @@ variable "logs_ingestion_evaluation_period" {
   default = "last_1d"
 }
 
-variable "logs_ingestion_severity" {
-  type    = string
-  default = "minor"
-}
-
 variable "logs_ingestion_note" {
   type    = string
   default = ""
@@ -45,5 +40,5 @@ variable "logs_ingestion_priority" {
   description = "Number from 1 (high) to 5 (low)."
 
   type    = number
-  default = null
+  default = 3
 }
