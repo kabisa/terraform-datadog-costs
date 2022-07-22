@@ -4,7 +4,8 @@ locals {
 }
 
 module "custom_metrics" {
-  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.7.0"
+  source  = "kabisa/generic-monitor/datadog"
+  version = "1.0.0"
 
   name             = "Estimated Custom Metrics Usage"
   query            = "avg(${var.custom_metrics_evaluation_period}):sum:datadog.estimated_usage.metrics.custom{${local.custom_metrics_filter}} > ${var.custom_metrics_critical}"
@@ -21,7 +22,7 @@ module "custom_metrics" {
   note               = var.custom_metrics_note
 
   # module level vars
-  env                  = var.alert_env
+  env                  = var.env
   service              = var.service
   notification_channel = var.notification_channel
   additional_tags      = var.additional_tags

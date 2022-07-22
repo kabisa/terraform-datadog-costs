@@ -4,7 +4,8 @@ locals {
 }
 
 module "logs_ingestion_4h" {
-  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.7.0"
+  source  = "kabisa/generic-monitor/datadog"
+  version = "1.0.0"
 
   name             = "Logs ingestion high"
   query            = "sum(${var.logs_ingestion_4h_evaluation_period}):sum:custom_datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_4h_filter}}.as_count() > ${var.logs_ingestion_4h_critical}"
@@ -21,7 +22,7 @@ module "logs_ingestion_4h" {
   note               = var.logs_ingestion_4h_note
 
   # module level vars
-  env                  = var.alert_env
+  env                  = var.env
   service              = var.service
   notification_channel = var.notification_channel
   additional_tags      = var.additional_tags

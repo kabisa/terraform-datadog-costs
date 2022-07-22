@@ -6,7 +6,8 @@ locals {
 }
 
 module "apm_hosts" {
-  source = "git@github.com:kabisa/terraform-datadog-generic-monitor.git?ref=0.7.0"
+  source  = "kabisa/generic-monitor/datadog"
+  version = "1.0.0"
 
   name             = "Estimated APM Hosts Usage"
   query            = "avg(${var.apm_hosts_evaluation_period}):sum:datadog.estimated_usage.apm_hosts{${local.apm_hosts_filter}} > ${var.apm_hosts_critical}"
@@ -23,7 +24,7 @@ module "apm_hosts" {
   note               = var.apm_hosts_note
 
   # module level vars
-  env                  = var.alert_env
+  env                  = var.env
   service              = var.service
   notification_channel = var.notification_channel
   additional_tags      = var.additional_tags
