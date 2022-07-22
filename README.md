@@ -40,47 +40,32 @@ module "costs" {
   logs_ingestion_critical    = 850000000
   logs_ingestion_warning     = 600000000
 }
+
 ```
 
+
+[Module Variables](#module-variables)
+
 Monitors:
-* [Terraform module for Datadog Costs](#terraform-module-for-datadog-costs)
-  * [Containers](#containers)
-  * [Apm Hosts](#apm-hosts)
-  * [Hosts](#hosts)
-  * [Custom Metrics](#custom-metrics)
-  * [Apm Spans](#apm-spans)
-  * [Logs Ingestion 4h](#logs-ingestion-4h)
-  * [Logs Ingestion](#logs-ingestion)
-  * [Logs Indexed](#logs-indexed)
-  * [Module Variables](#module-variables)
+
+| Monitor name    | Default enabled | Priority | Query                  |
+|-----------------|------|----|------------------------|
+| [Apm Hosts](#apm-hosts) | True | 4  | `avg(last_1h):sum:datadog.estimated_usage.apm_hosts{tag:xxx} > ` |
+| [Apm Spans](#apm-spans) | True | 3  | `sum(last_1h):sum:datadog.estimated_usage.apm.indexed_spans{tag:xxx}.as_count() > ` |
+| [Containers](#containers) | True | 4  | `avg(last_1h):sum:datadog.estimated_usage.containers{tag:xxx} > ` |
+| [Custom Metrics](#custom-metrics) | True | 4  | `avg(last_1h):sum:datadog.estimated_usage.metrics.custom{tag:xxx} > ` |
+| [Hosts](#hosts) | True | 4  | `avg(last_1h):sum:datadog.estimated_usage.hosts{tag:xxx} > ` |
+| [Logs Indexed](#logs-indexed) | True | 3  | `sum(last_4h):sum:custom_datadog.estimated_usage.logs.ingested_events{tag:xxx}.as_count() > ` |
+| [Logs Ingestion 4h](#logs-ingestion-4h) | True | 3  | `sum(last_4h):sum:custom_datadog.estimated_usage.logs.ingested_bytes{tag:xxx}.as_count() > ` |
+| [Logs Ingestion](#logs-ingestion) | True | 3  | `sum(last_1d):sum:custom_datadog.estimated_usage.logs.ingested_bytes{tag:xxx}.as_count() > ` |
 
 # Getting started developing
 [pre-commit](http://pre-commit.com/) was used to do Terraform linting and validating.
 
 Steps:
    - Install [pre-commit](http://pre-commit.com/). E.g. `brew install pre-commit`.
-   - Run `pre-commit install` in this repo. (Every time you cloud a repo with pre-commit enabled you will need to run the pre-commit install command)
+   - Run `pre-commit install` in this repo. (Every time you clone a repo with pre-commit enabled you will need to run the pre-commit install command)
    - That’s it! Now every time you commit a code change (`.tf` file), the hooks in the `hooks:` config `.pre-commit-config.yaml` will execute.
-
-## Containers
-
-Query:
-```terraform
-avg(last_1h):sum:datadog.estimated_usage.containers{tag:xxx} > 
-```
-
-| variable                     | default  | required | description                      |
-|------------------------------|----------|----------|----------------------------------|
-| containers_enabled           | True     | No       |                                  |
-| containers_warning           | None     | No       |                                  |
-| containers_critical          |          | Yes      |                                  |
-| containers_evaluation_period | last_1h  | No       |                                  |
-| containers_note              | ""       | No       |                                  |
-| containers_docs              | ""       | No       |                                  |
-| containers_filter_override   | ""       | No       |                                  |
-| containers_alerting_enabled  | True     | No       |                                  |
-| containers_priority          | 4        | No       | Number from 1 (high) to 5 (low). |
-
 
 ## Apm Hosts
 
@@ -102,24 +87,44 @@ avg(last_1h):sum:datadog.estimated_usage.apm_hosts{tag:xxx} >
 | apm_hosts_priority          | 4        | No       | Number from 1 (high) to 5 (low). |
 
 
-## Hosts
+## Apm Spans
 
 Query:
 ```terraform
-avg(last_1h):sum:datadog.estimated_usage.hosts{tag:xxx} > 
+sum(last_1h):sum:datadog.estimated_usage.apm.indexed_spans{tag:xxx}.as_count() > 
 ```
 
-| variable                | default  | required | description                      |
-|-------------------------|----------|----------|----------------------------------|
-| hosts_enabled           | True     | No       |                                  |
-| hosts_warning           | None     | No       |                                  |
-| hosts_critical          |          | Yes      |                                  |
-| hosts_evaluation_period | last_1h  | No       |                                  |
-| hosts_note              | ""       | No       |                                  |
-| hosts_docs              | ""       | No       |                                  |
-| hosts_filter_override   | ""       | No       |                                  |
-| hosts_alerting_enabled  | True     | No       |                                  |
-| hosts_priority          | 4        | No       | Number from 1 (high) to 5 (low). |
+| variable                    | default  | required | description                      |
+|-----------------------------|----------|----------|----------------------------------|
+| apm_spans_enabled           | True     | No       |                                  |
+| apm_spans_warning           |          | Yes      |                                  |
+| apm_spans_critical          |          | Yes      |                                  |
+| apm_spans_evaluation_period | last_1h  | No       |                                  |
+| apm_spans_note              | ""       | No       |                                  |
+| apm_spans_docs              | ""       | No       |                                  |
+| apm_spans_filter_override   | ""       | No       |                                  |
+| apm_spans_alerting_enabled  | True     | No       |                                  |
+| apm_spans_priority          | 3        | No       | Number from 1 (high) to 5 (low). |
+
+
+## Containers
+
+Query:
+```terraform
+avg(last_1h):sum:datadog.estimated_usage.containers{tag:xxx} > 
+```
+
+| variable                     | default  | required | description                      |
+|------------------------------|----------|----------|----------------------------------|
+| containers_enabled           | True     | No       |                                  |
+| containers_warning           | None     | No       |                                  |
+| containers_critical          |          | Yes      |                                  |
+| containers_evaluation_period | last_1h  | No       |                                  |
+| containers_note              | ""       | No       |                                  |
+| containers_docs              | ""       | No       |                                  |
+| containers_filter_override   | ""       | No       |                                  |
+| containers_alerting_enabled  | True     | No       |                                  |
+| containers_priority          | 4        | No       | Number from 1 (high) to 5 (low). |
 
 
 ## Custom Metrics
@@ -142,24 +147,44 @@ avg(last_1h):sum:datadog.estimated_usage.metrics.custom{tag:xxx} >
 | custom_metrics_priority          | 4        | No       | Number from 1 (high) to 5 (low). |
 
 
-## Apm Spans
+## Hosts
 
 Query:
 ```terraform
-sum(last_1h):sum:datadog.estimated_usage.apm.indexed_spans{tag:xxx}.as_count() > 
+avg(last_1h):sum:datadog.estimated_usage.hosts{tag:xxx} > 
 ```
 
-| variable                    | default  | required | description                      |
-|-----------------------------|----------|----------|----------------------------------|
-| apm_spans_enabled           | True     | No       |                                  |
-| apm_spans_warning           |          | Yes      |                                  |
-| apm_spans_critical          |          | Yes      |                                  |
-| apm_spans_evaluation_period | last_1h  | No       |                                  |
-| apm_spans_note              | ""       | No       |                                  |
-| apm_spans_docs              | ""       | No       |                                  |
-| apm_spans_filter_override   | ""       | No       |                                  |
-| apm_spans_alerting_enabled  | True     | No       |                                  |
-| apm_spans_priority          | 3        | No       | Number from 1 (high) to 5 (low). |
+| variable                | default  | required | description                      |
+|-------------------------|----------|----------|----------------------------------|
+| hosts_enabled           | True     | No       |                                  |
+| hosts_warning           | None     | No       |                                  |
+| hosts_critical          |          | Yes      |                                  |
+| hosts_evaluation_period | last_1h  | No       |                                  |
+| hosts_note              | ""       | No       |                                  |
+| hosts_docs              | ""       | No       |                                  |
+| hosts_filter_override   | ""       | No       |                                  |
+| hosts_alerting_enabled  | True     | No       |                                  |
+| hosts_priority          | 4        | No       | Number from 1 (high) to 5 (low). |
+
+
+## Logs Indexed
+
+Query:
+```terraform
+sum(last_4h):sum:custom_datadog.estimated_usage.logs.ingested_events{tag:xxx}.as_count() > 
+```
+
+| variable                       | default  | required | description                      |
+|--------------------------------|----------|----------|----------------------------------|
+| logs_indexed_enabled           | True     | No       |                                  |
+| logs_indexed_warning           | None     | No       |                                  |
+| logs_indexed_critical          |          | Yes      |                                  |
+| logs_indexed_evaluation_period | last_4h  | No       |                                  |
+| logs_indexed_note              | ""       | No       |                                  |
+| logs_indexed_docs              | ""       | No       |                                  |
+| logs_indexed_filter_override   | ""       | No       |                                  |
+| logs_indexed_alerting_enabled  | True     | No       |                                  |
+| logs_indexed_priority          | 3        | No       | Number from 1 (high) to 5 (low). |
 
 
 ## Logs Ingestion 4h
@@ -200,26 +225,6 @@ sum(last_1d):sum:custom_datadog.estimated_usage.logs.ingested_bytes{tag:xxx}.as_
 | logs_ingestion_filter_override   | ""       | No       |                                  |
 | logs_ingestion_alerting_enabled  | True     | No       |                                  |
 | logs_ingestion_priority          | 3        | No       | Number from 1 (high) to 5 (low). |
-
-
-## Logs Indexed
-
-Query:
-```terraform
-sum(last_4h):sum:custom_datadog.estimated_usage.logs.ingested_events{tag:xxx}.as_count() > 
-```
-
-| variable                       | default  | required | description                      |
-|--------------------------------|----------|----------|----------------------------------|
-| logs_indexed_enabled           | True     | No       |                                  |
-| logs_indexed_warning           | None     | No       |                                  |
-| logs_indexed_critical          |          | Yes      |                                  |
-| logs_indexed_evaluation_period | last_4h  | No       |                                  |
-| logs_indexed_note              | ""       | No       |                                  |
-| logs_indexed_docs              | ""       | No       |                                  |
-| logs_indexed_filter_override   | ""       | No       |                                  |
-| logs_indexed_alerting_enabled  | True     | No       |                                  |
-| logs_indexed_priority          | 3        | No       | Number from 1 (high) to 5 (low). |
 
 
 ## Module Variables

@@ -1,3 +1,4 @@
+# tflint-ignore: terraform_module_version
 module "costs" {
   source = "kabisa/costs/datadog"
 
