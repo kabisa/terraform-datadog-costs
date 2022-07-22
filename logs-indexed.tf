@@ -22,7 +22,7 @@ module "logs_indexed" {
   note               = var.logs_indexed_note
 
   # module level vars
-  env                  = var.alert_env
+  env                  = var.env
   service              = var.service
   notification_channel = var.notification_channel
   additional_tags      = var.additional_tags

@@ -22,7 +22,7 @@ module "logs_ingestion_4h" {
   note               = var.logs_ingestion_4h_note
 
   # module level vars
-  env                  = var.alert_env
+  env                  = var.env
   service              = var.service
   notification_channel = var.notification_channel
   additional_tags      = var.additional_tags

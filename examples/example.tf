@@ -2,7 +2,7 @@
 module "costs" {
   source = "kabisa/costs/datadog"
 
-  notification_channel = "mail@example.com"
+  notification_channel = "@mail@example.com"
   env                  = "prd"
   alert_env            = "prd"
 

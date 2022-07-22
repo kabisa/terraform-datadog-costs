@@ -23,7 +23,7 @@ Modules are generated with this tool: https://github.com/kabisa/datadog-terrafor
 module "costs" {
   source = "kabisa/costs/datadog"
 
-  notification_channel = "mail@example.com"
+  notification_channel = "@mail@example.com"
   env                  = "prd"
   alert_env            = "prd"
 
@@ -232,7 +232,6 @@ sum(last_1d):sum:custom_datadog.estimated_usage.logs.ingested_bytes{tag:xxx}.as_
 | variable                      | default  | required | description  |
 |-------------------------------|----------|----------|--------------|
 | env                           |          | Yes      |              |
-| alert_env                     |          | Yes      |              |
 | service                       | Costs    | No       |              |
 | notification_channel          |          | Yes      |              |
 | additional_tags               | []       | No       |              |
