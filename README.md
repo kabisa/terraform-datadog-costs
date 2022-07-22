@@ -1,9 +1,46 @@
 
 ![Datadog](https://imgix.datadoghq.com/img/about/presskit/logo-v/dd_vertical_purple.png)
 
-[//]: # (This file is generated. Do not edit)
+[//]: # (This file is generated. Do not edit, module description can be added by editing / creating module_description.md)
 
 # Terraform module for Datadog Costs
+
+This module will set up alerts to make sure you don't suddenly overspend on you datadog bill.
+It will also generate a costs dashboard
+
+This module is part of a larger suite of modules that provide alerts in Datadog.
+Other modules can be found on the [Terraform Registry](https://registry.terraform.io/search/modules?namespace=kabisa&provider=datadog)
+
+We have two base modules we use to standardise development of our Monitor Modules:
+- [generic monitor](https://github.com/kabisa/terraform-datadog-generic-monitor) Used in 90% of our alerts
+- [service check monitor](https://github.com/kabisa/terraform-datadog-service-check-monitor)
+
+Modules are generated with this tool: https://github.com/kabisa/datadog-terraform-generator
+
+# Example Usage
+
+```terraform
+module "costs" {
+  source = "kabisa/costs/datadog"
+
+  notification_channel = "mail@example.com"
+  env                  = "prd"
+  alert_env            = "prd"
+
+  # Example config, please adjust
+  filter_str                 = "*"
+  apm_hosts_critical         = 2
+  apm_spans_critical         = 1000000
+  apm_spans_warning          = 800000
+  containers_critical        = 375
+  custom_metrics_critical    = 10000
+  hosts_critical             = 20
+  logs_indexed_critical      = 150000
+  logs_ingestion_4h_critical = 208000000
+  logs_ingestion_critical    = 850000000
+  logs_ingestion_warning     = 600000000
+}
+```
 
 Monitors:
 * [Terraform module for Datadog Costs](#terraform-module-for-datadog-costs)
@@ -17,7 +54,7 @@ Monitors:
   * [Logs Indexed](#logs-indexed)
   * [Module Variables](#module-variables)
 
-# Getting started
+# Getting started developing
 [pre-commit](http://pre-commit.com/) was used to do Terraform linting and validating.
 
 Steps:
@@ -29,13 +66,13 @@ Steps:
 
 Query:
 ```terraform
-avg(${var.containers_evaluation_period}):sum:datadog.estimated_usage.containers{${local.containers_filter}} > ${var.containers_critical}
+avg(last_1h):sum:datadog.estimated_usage.containers{tag:xxx} > 
 ```
 
 | variable                     | default  | required | description                      |
 |------------------------------|----------|----------|----------------------------------|
 | containers_enabled           | True     | No       |                                  |
-| containers_warning           | null     | No       |                                  |
+| containers_warning           | None     | No       |                                  |
 | containers_critical          |          | Yes      |                                  |
 | containers_evaluation_period | last_1h  | No       |                                  |
 | containers_note              | ""       | No       |                                  |
@@ -49,13 +86,13 @@ avg(${var.containers_evaluation_period}):sum:datadog.estimated_usage.containers{
 
 Query:
 ```terraform
-avg(${var.apm_hosts_evaluation_period}):sum:datadog.estimated_usage.apm_hosts{${local.apm_hosts_filter}} > ${var.apm_hosts_critical}
+avg(last_1h):sum:datadog.estimated_usage.apm_hosts{tag:xxx} > 
 ```
 
 | variable                    | default  | required | description                      |
 |-----------------------------|----------|----------|----------------------------------|
 | apm_hosts_enabled           | True     | No       |                                  |
-| apm_hosts_warning           | null     | No       |                                  |
+| apm_hosts_warning           | None     | No       |                                  |
 | apm_hosts_critical          |          | Yes      |                                  |
 | apm_hosts_evaluation_period | last_1h  | No       |                                  |
 | apm_hosts_note              | ""       | No       |                                  |
@@ -69,13 +106,13 @@ avg(${var.apm_hosts_evaluation_period}):sum:datadog.estimated_usage.apm_hosts{${
 
 Query:
 ```terraform
-avg(${var.hosts_evaluation_period}):sum:datadog.estimated_usage.hosts{${local.hosts_filter}} > ${var.hosts_critical}
+avg(last_1h):sum:datadog.estimated_usage.hosts{tag:xxx} > 
 ```
 
 | variable                | default  | required | description                      |
 |-------------------------|----------|----------|----------------------------------|
 | hosts_enabled           | True     | No       |                                  |
-| hosts_warning           | null     | No       |                                  |
+| hosts_warning           | None     | No       |                                  |
 | hosts_critical          |          | Yes      |                                  |
 | hosts_evaluation_period | last_1h  | No       |                                  |
 | hosts_note              | ""       | No       |                                  |
@@ -89,13 +126,13 @@ avg(${var.hosts_evaluation_period}):sum:datadog.estimated_usage.hosts{${local.ho
 
 Query:
 ```terraform
-avg(${var.custom_metrics_evaluation_period}):sum:datadog.estimated_usage.metrics.custom{${local.custom_metrics_filter}} > ${var.custom_metrics_critical}
+avg(last_1h):sum:datadog.estimated_usage.metrics.custom{tag:xxx} > 
 ```
 
 | variable                         | default  | required | description                      |
 |----------------------------------|----------|----------|----------------------------------|
 | custom_metrics_enabled           | True     | No       |                                  |
-| custom_metrics_warning           | null     | No       |                                  |
+| custom_metrics_warning           | None     | No       |                                  |
 | custom_metrics_critical          |          | Yes      |                                  |
 | custom_metrics_evaluation_period | last_1h  | No       |                                  |
 | custom_metrics_note              | ""       | No       |                                  |
@@ -109,7 +146,7 @@ avg(${var.custom_metrics_evaluation_period}):sum:datadog.estimated_usage.metrics
 
 Query:
 ```terraform
-sum(${var.apm_spans_evaluation_period}):sum:datadog.estimated_usage.apm.indexed_spans{${local.apm_spans_filter}}.as_count() > ${var.apm_spans_critical}
+sum(last_1h):sum:datadog.estimated_usage.apm.indexed_spans{tag:xxx}.as_count() > 
 ```
 
 | variable                    | default  | required | description                      |
@@ -129,14 +166,14 @@ sum(${var.apm_spans_evaluation_period}):sum:datadog.estimated_usage.apm.indexed_
 
 Query:
 ```terraform
-sum(${var.logs_ingestion_4h_evaluation_period}):sum:custom_datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_4h_filter}}.as_count() > ${var.logs_ingestion_4h_critical}
+sum(last_4h):sum:custom_datadog.estimated_usage.logs.ingested_bytes{tag:xxx}.as_count() > 
 ```
 
 | variable                            | default  | required | description                      |
 |-------------------------------------|----------|----------|----------------------------------|
 | logs_ingestion_4h_enabled           | True     | No       |                                  |
-| logs_ingestion_4h_warning           | null     | No       |                                  |
-| logs_ingestion_4h_critical          | null     | No       |                                  |
+| logs_ingestion_4h_warning           | None     | No       |                                  |
+| logs_ingestion_4h_critical          | None     | No       |                                  |
 | logs_ingestion_4h_evaluation_period | last_4h  | No       |                                  |
 | logs_ingestion_4h_note              | ""       | No       |                                  |
 | logs_ingestion_4h_docs              | ""       | No       |                                  |
@@ -149,7 +186,7 @@ sum(${var.logs_ingestion_4h_evaluation_period}):sum:custom_datadog.estimated_usa
 
 Query:
 ```terraform
-sum(${var.logs_ingestion_evaluation_period}):sum:custom_datadog.estimated_usage.logs.ingested_bytes{${local.logs_ingestion_filter}}.as_count() > ${var.logs_ingestion_critical}
+sum(last_1d):sum:custom_datadog.estimated_usage.logs.ingested_bytes{tag:xxx}.as_count() > 
 ```
 
 | variable                         | default  | required | description                      |
@@ -169,13 +206,13 @@ sum(${var.logs_ingestion_evaluation_period}):sum:custom_datadog.estimated_usage.
 
 Query:
 ```terraform
-sum(${var.logs_indexed_evaluation_period}):sum:custom_datadog.estimated_usage.logs.ingested_events{${local.logs_indexed_filter}}.as_count() > ${var.logs_indexed_critical}
+sum(last_4h):sum:custom_datadog.estimated_usage.logs.ingested_events{tag:xxx}.as_count() > 
 ```
 
 | variable                       | default  | required | description                      |
 |--------------------------------|----------|----------|----------------------------------|
 | logs_indexed_enabled           | True     | No       |                                  |
-| logs_indexed_warning           | null     | No       |                                  |
+| logs_indexed_warning           | None     | No       |                                  |
 | logs_indexed_critical          |          | Yes      |                                  |
 | logs_indexed_evaluation_period | last_4h  | No       |                                  |
 | logs_indexed_note              | ""       | No       |                                  |
